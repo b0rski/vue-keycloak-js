@@ -8,6 +8,7 @@ export default {
     installed = true
 
     const defaultParams = {
+      idpHint: '',
       config: window.__BASEURL__ ? `${window.__BASEURL__}/config` : '/config',
       init: {onLoad: 'login-required'}
     }
@@ -66,7 +67,8 @@ export default {
 
 function init (config, watch, options) {
   const ctor = sanitizeConfig(config)
-  const keycloak = Keycloak(ctor)
+  const idpHint = options.idpHint;
+  const keycloak = Keycloak({ idpHint }, ctor)
 
   watch.$once('ready', function (cb) {
     cb && cb()
